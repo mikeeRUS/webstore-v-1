@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>View Product</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
+    <link  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+
+    <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm bg-info navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#" th:href="@{'/index'}">Start Webstore</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{'/product/list'}">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <h1 class="my-4">Online Webstore</h1>
+            <div class="list-group">
+                <tr th:each="category : ${cat}">
+                    <a href="#" th:href="@{'/category/' + ${category.id}}"
+                       class="list-group-item list-group-item-info"
+                       th:text="${category.categoryName}">Elektronika</a>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="card mt-4">
+                <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
+                <div class="card-body">
+                    <h3 class="card-title" th:text="${product.name}">Product Name</h3>
+                    <h4 th:text="${product.price} + ' PLN'">$24.99</h4>
+                    <p class="card-text" th:text="${product.description}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
+                </div>
+            </div>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Specyfikacja</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Producent</td>
+                    <td th:text="${product.manufacturer}">Lenovo</td>
+                </tr>
+                <tr>
+                    <td>Ilosc sztuk</td>
+                    <td th:text="${product.unitsInStock}">Moe</td>
+                </tr>
+                </tbody>
+            </table>
+
+
+</body>
+</html>

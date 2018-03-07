@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" ng-app="demo">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Webstore Home</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
+    <link  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+
+    <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+
+</head>
+<body ng-controller="Hello">
+
+<nav class="navbar navbar-expand-sm bg-info navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#" th:href="@{'/index'}">Start Webstore</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div sec:authorize="!isAuthenticated()">
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{'/login'}">Zaloguj</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{'/registration'}">Rejestracja</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" th:href="@{'/logout'}">Wyloguj</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Moje Konto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <table id="cart" class="table table-hover table-condensed">
+        <thead>
+        <tr>
+            <th style="width:72%">Produkt</th>
+            <th style="width:10%">Cena</th>
+            <th style="width:8%">Ilość</th>
+            <th style="width:10%"></th>
+        </tr>
+        </thead>
+
+        <tbody ng-repeat="item in items.cartItemList">
+        <td data-th="Product">
+            <div class="row">
+                <div class="col-sm-10">
+                    <h4 class="nomargin">{{item.product.name}}</h4>
+                    <p>{{item.product.description}}</p>
+                </div>
+            </div>
+        </td>
+        <td data-th="Price">{{item.price}} PLN</td>
+        <td data-th="Quantity">{{item.quantity}}</td>
+        <td class="actions" data-th="">
+            <a href="#" th:href="@{'/cart'}" type="button" class="btn btn-info"
+                           ng-click="removeFromCart(item.product.id)">Usuń</a>
+        </td>
+        </tbody>
+
+        <tfoot ng-if="items.cartItemList.length > 0">
+        <tr>
+            <td><a href="#" th:href="@{'/logout'}" class="btn btn-info ">Kontynuuj zakupy </a></td>
+            <td class="hidden-xs text-center"><strong>Łącznie {{items.subTotal}} PLN</strong></td>
+            <td><a href="#" class="btn btn-success actions">Do kasy</a></td>
+        </tr>
+        </tfoot>
+    </table>
+
+    <h1 ng-if="!items.cartItemList.length > 0"><small>Twój koszyk jest pusty</small></h1>
+
+</div>
+</div>
+
+
+<script>
+    angular.module('demo', [])
+        .controller('Hello', function($scope, $http) {
+            $http.get('http://localhost:8080/rest/cart').
+            then(function(response) {
+                $scope.items = response.data;
+            });
+            $scope.removeFromCart = function(productId) {
+                $http.delete('/delete/' + productId)
+                    .then(function (data) {
+                        $http.get('/cart');
+                    });
+            };
+        });
+
+</script>
+
+</body>
+</html>
