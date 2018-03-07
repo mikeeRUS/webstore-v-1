@@ -66,27 +66,4 @@ public class CartRestController {
         return new ResponseEntity<Cart>(savedCart, HttpStatus.OK);
     }
 
-
-
-    @GetMapping("/rest")
-    @CrossOrigin
-    public ResponseEntity<Cart> get(HttpServletRequest httpServletRequest) {
-        Cart cart = new Cart();
-        cart.setId(1L);
-        cart.setCartSessionId(httpServletRequest.getSession(true).getId());
-        cart.setSubTotal(new BigDecimal(20));
-        CartItem cartItem = new CartItem();
-        cartItem.setCart(cart);
-        cartItem.setPrice(new BigDecimal(20));
-        cartItem.setProduct(new Product());
-        cart.getCartItemList().add(cartItem);
-        return new ResponseEntity<Cart>(cart, HttpStatus.OK);
-    }
-
-    @GetMapping("/resttest")
-    @CrossOrigin
-    public ResponseEntity<Cart> getTest(HttpServletRequest httpServletRequest) {
-        Cart cart = cartService.findByCartSessionId(httpServletRequest.getSession(true).getId());
-        return new ResponseEntity<Cart>(cart, HttpStatus.OK);
-    }
 }
