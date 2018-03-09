@@ -11,7 +11,7 @@ public interface ProductService {
     Set<Product> getAllProducts();
     Product findById(Long id);
     Set<Product> findByCategory(Long id);
-    Product saveProduct(Product product);
     ProductCommand saveCommand(ProductCommand productCommand);
     void deleteProduct(Long id);
+    ProductCommand findCommandById(Long id);
 }

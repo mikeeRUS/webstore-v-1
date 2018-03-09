@@ -35,14 +35,10 @@ public class ProductToProductCommand implements Converter<Product, ProductComman
         productCommand.setImage(source.getImage());
         productCommand.setName(source.getName());
 
-
-
         if(source.getCategories() != null && source.getCategories().size() > 0) {
             source.getCategories()
                     .forEach((Category category) -> productCommand.getCategories().add(categoryToCategoryCommand.convert(category)));
         }
-
-
 
         return productCommand;
     }

@@ -3,6 +3,7 @@ package info.mike.webstorev1.service;
 import info.mike.webstorev1.commands.ProductCommand;
 import info.mike.webstorev1.converters.ProductCommandToProduct;
 import info.mike.webstorev1.converters.ProductToProductCommand;
+import info.mike.webstorev1.domain.Category;
 import info.mike.webstorev1.domain.Product;
 import info.mike.webstorev1.exceptions.NotFoundException;
 import info.mike.webstorev1.repository.CategoryRepository;
@@ -49,16 +50,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Set<Product> findByCategory(Long id) {
         Set<Product> productsByCategory = new HashSet<>();
-        getAllProducts().stream().filter(c -> c.getCategories().contains(categoryRepository.findById(id).get()))
+        Category category = categoryRepository.findById(id).get();
+        getAllProducts().stream().filter(c -> c.getCategories().contains(category))
                 .forEach(productsByCategory::add);
         return productsByCategory;
-    }
-
-    @Transactional
-    @Override
-    public Product saveProduct(Product product) {
-        Product savedProduct = productRepository.save(product);
-        return savedProduct;
     }
 
     @Transactional
@@ -67,6 +62,12 @@ public class ProductServiceImpl implements ProductService {
         Product detachedProduct = productCommandToProduct.convert(productCommand);
         Product savedProduct = productRepository.save(detachedProduct);
         return productToProductCommand.convert(savedProduct);
+    }
+
+    @Transactional
+    @Override
+    public ProductCommand findCommandById(Long id) {
+        return productToProductCommand.convert(findById(id));
     }
 
     @Transactional

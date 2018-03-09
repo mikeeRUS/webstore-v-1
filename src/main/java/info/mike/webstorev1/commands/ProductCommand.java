@@ -8,7 +8,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @EqualsAndHashCode(exclude = "categories")
@@ -28,6 +30,8 @@ public class ProductCommand  {
     private Byte[] image;
 
     private Set<CategoryCommand> categories = new HashSet<>();
+
+    private Map<String, String> productProperties = new HashMap<>();
 
     public Long getId() {
         return id;

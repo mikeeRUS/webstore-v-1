@@ -43,7 +43,7 @@ public class ProductController {
     @RequestMapping("/product/edit/{id}")
     public String editProduct(@PathVariable String id, Model model) {
         model.addAttribute("cat", categoryService.getAllCategoriesCommand());
-        model.addAttribute("productf", productService.findById(Long.valueOf(id)));
+        model.addAttribute("productf", productService.findCommandById(Long.valueOf(id)));//changed
         return "product/addProduct";
     }
 
@@ -53,18 +53,6 @@ public class ProductController {
        productService.deleteProduct(Long.valueOf(id));
         return "redirect:/product/list";
     }
-
-    /*
-    @PostMapping("product")
-    public String saveNewProduct(@ModelAttribute("productf") Product product, BindingResult bindingResult) {
-        productService.saveProduct(product);
-        System.out.println("Field value: " + bindingResult.getFieldValue("categories"));
-        System.out.println("Raw field value: " + bindingResult.getRawFieldValue("categories"));
-        System.out.println("Field type: " + bindingResult.getFieldType("categories"));
-
-        return "redirect:/index";
-    }
-*/
 
     @PostMapping("product")
     public String saveNewProduct(@Valid @ModelAttribute("productf") ProductCommand productCommand, BindingResult bindingResult) {
