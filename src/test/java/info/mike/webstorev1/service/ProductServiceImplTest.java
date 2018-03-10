@@ -100,7 +100,7 @@ public class ProductServiceImplTest {
         when(productRepository.findById(anyLong())).thenReturn(productOptional);
 
         ProductCommand productCommand = new ProductCommand();
-        product.setId(1L);
+        productCommand.setId(1L);
 
         when(productToProductCommand.convert(any())).thenReturn(productCommand);
 
