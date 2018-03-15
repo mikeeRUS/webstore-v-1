@@ -24,12 +24,6 @@ public class CartRestController {
         this.productService = productService;
     }
 
-    @GetMapping("/addcart")
-    public void createCart(HttpServletRequest httpServletRequest) {
-        cartService.createCart(httpServletRequest.getSession(true).getId());
-        System.out.println("Utworzono koszyk(GET)");
-    }
-
     @GetMapping("/rest/cart")
     public ResponseEntity<Cart> showCart(HttpServletRequest httpServletRequest) {
         String sessionId = httpServletRequest.getSession(true).getId();

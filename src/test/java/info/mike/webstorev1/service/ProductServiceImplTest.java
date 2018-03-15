@@ -80,7 +80,7 @@ public class ProductServiceImplTest {
 
         Set<Product> productsByCategorySet = productService.findByCategory(1L);
 
-        assertFalse(productsByCategorySet.isEmpty());
+        assertEquals(1, productsByCategorySet.size());
         verify(categoryRepository, times(1)).findById(anyLong());
     }
 

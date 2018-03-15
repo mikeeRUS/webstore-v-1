@@ -2,10 +2,7 @@ package info.mike.webstorev1.commands;
 
 import info.mike.webstorev1.validators.FieldMatch;
 
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 
 @FieldMatch.List({
         @FieldMatch(field = "password", fieldMatch = "confirmPassword", message = "Podane hasła nie są takie same!"),
@@ -18,12 +15,12 @@ public class UserCommand {
     @NotBlank(message = "Pole nie może być puste.")
     private String lastName;
 
-    @Min(value = 6, message = "Hasło musi zawierać minimum 6 znaków.")
+    @Size(min = 6, message = "Hasło musi zawierać minimum 6 znaków.")
     private String password;
 
     private String confirmPassword;
 
-    @Email
+    @Email(message = "Niepoprawny adres email")
     @NotBlank(message = "Pole nie może być puste.")
     private String email;
 

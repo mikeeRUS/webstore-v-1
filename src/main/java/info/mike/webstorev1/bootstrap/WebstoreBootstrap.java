@@ -29,8 +29,6 @@ public class WebstoreBootstrap implements ApplicationListener<ContextRefreshedEv
     @Transactional
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        //productRepository.saveAll(getAllProducts());
-
         initData();
     }
 
@@ -119,76 +117,6 @@ public class WebstoreBootstrap implements ApplicationListener<ContextRefreshedEv
         categoryRepository.save(oprogramowanie);
         categoryRepository.save(sprzetaudio);
         categoryRepository.save(fotoiwideo);
-
-    }
-
-
-    private List<Product> getAllProducts(){
-
-        List<Product> products = new ArrayList<>();
-
-        Category elektronika = new Category();
-        elektronika.setCategoryName("Elektronika");
-
-        Category telefonyISmartwatche = new Category();
-        telefonyISmartwatche.setCategoryName("Telefony i Smartwatche");
-
-        Category telewizoryIRTV = new Category();
-        telewizoryIRTV.setCategoryName("Telewizory i RTV");
-
-        Category agd = new Category();
-        agd.setCategoryName("AGD");
-
-        Category dom = new Category();
-        dom.setCategoryName("Dom");
-
-        Product komputer = new Product();
-        komputer.setName("Komputer Infinity S700");
-        komputer.setDescription("Komputer Infinity S700 został stworzony dla najbardziej wymagającej grupy " +
-                "użytkowników domowych – dla graczy i osób zajmujących się obróbką wideo.");
-        komputer.setManufacturer("Komputronik");
-        komputer.setPrice(new BigDecimal(4999));
-        komputer.setUnitsInStock(10L);
-        komputer.setDiscontinued(false);
-        komputer.getCategories().add(elektronika);
-
-        Product lenovoK5DualSim = new Product();
-        lenovoK5DualSim.setName("Lenovo K5 Dual SIM");
-        lenovoK5DualSim.setDescription("Lenovo K5 Dual SIM dostępny jest w trzech stylowych kolorach.");
-        lenovoK5DualSim.setManufacturer("Lenovo");
-        lenovoK5DualSim.setPrice(new BigDecimal(989L));
-        lenovoK5DualSim.setUnitsInStock(50L);
-        lenovoK5DualSim.setDiscontinued(false);
-        lenovoK5DualSim.getCategories().add(telefonyISmartwatche);
-        lenovoK5DualSim.getCategories().add(elektronika);
-
-        Product panasonicTX75EX780E = new Product();
-        panasonicTX75EX780E.setName("Panasonic TX-75EX780E");
-        panasonicTX75EX780E.setDescription("Funkcjonalna elegancja i wszechstronne mozliwosci połączeń to zalety to zalety, które" +
-                "łączy w sobie telewizor Panasonic TX-75EX780E");
-        panasonicTX75EX780E.setManufacturer("Panasonic");
-        panasonicTX75EX780E.setPrice(new BigDecimal(15999));
-        panasonicTX75EX780E.setUnitsInStock(30L);
-        panasonicTX75EX780E.setDiscontinued(false);
-        panasonicTX75EX780E.getCategories().add(telewizoryIRTV);
-
-        Product philipsHR167690 = new Product();
-        philipsHR167690.setName("Philips HR1676/90");
-        philipsHR167690.getCategories().add(agd);
-
-
-        Product stanleyFME1250K = new Product();
-        stanleyFME1250K.setName("Stanley FME1250K");
-        stanleyFME1250K.getCategories().add(dom);
-
-        products.add(komputer);
-        products.add(lenovoK5DualSim);
-        products.add(panasonicTX75EX780E);
-        products.add(philipsHR167690);
-        products.add(stanleyFME1250K);
-
-
-        return products;
 
     }
 }

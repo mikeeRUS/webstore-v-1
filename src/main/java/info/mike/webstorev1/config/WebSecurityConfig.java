@@ -24,22 +24,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
         http.csrf().disable()
                 .headers().frameOptions().disable().and()
                 .authorizeRequests()
-                .antMatchers("/category/**",
-                        "/index",
+                .antMatchers("/index",
                         "/",
+                        "/category/**",
+                        "/product/view/**",
                         "/h2-console/**",
                         "/registration",
                         "/images/**",
-                        "/delete/**",
                         "/rest/**",
                         "/cart",
                         "/add/**",
-                        "/resttest",
-                        "/addcart",
-                        "/product/**").permitAll() //ww.pozwalaj wszystkim
-                .antMatchers("/product/list").hasAnyRole("ADMIN") //ww. pozwalaj tylko adminowi
-                .anyRequest().authenticated() //inne nie lapiace się są tylko dla tych po autentyfikacji
+                        "/delete/**").permitAll() //ww.pozwalaj wszystkim
+                .antMatchers("/product/list",
+                        "/product/new",
+                        "/product/edit/**",
+                        "/product/delete/**").hasAnyRole("ADMIN")
+                .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/index", true)
+                .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler())
                 .and().logout().permitAll();
 
         http.logout()
@@ -48,18 +50,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/index")
                 .permitAll();
-
-
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-        //User.UserBuilder users = User.withDefaultPasswordEncoder();
         auth.inMemoryAuthentication()
                 .withUser("user")
                 .password(passwordEncoder()
                         .encode("pass"))
-                .roles("USER");
+                .roles("ADMIN");
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -69,7 +68,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
         return new BCryptPasswordEncoder();
     }
 
-
     @Bean
     public DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
@@ -78,20 +76,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
         return auth;
     }
 
-
-    /*
-    @Bean(name = "dataSource")
-    public DataSource dataSource() {
-        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-        driverManagerDataSource.setDriverClassName("org.h2.Driver");
-        driverManagerDataSource.setUrl("jdbc:h2:mem:testdb");
-        driverManagerDataSource.setUsername("Sa");
-        driverManagerDataSource.setPassword("");
-        return driverManagerDataSource;
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new AccessDeniedHandler();
     }
-    */
-
-
-
 
 }

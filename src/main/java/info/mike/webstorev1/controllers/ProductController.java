@@ -5,6 +5,8 @@ import info.mike.webstorev1.exceptions.NotFoundException;
 import info.mike.webstorev1.service.CategoryService;
 import info.mike.webstorev1.service.ProductService;
 import info.mike.webstorev1.service.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,16 +16,15 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 @Controller
+@Slf4j
 public class ProductController {
 
     private final CategoryService categoryService;
     private final ProductService productService;
-    private final UserService userService;
 
-    public ProductController(CategoryService categoryService, ProductService productService, UserService userService) {
+    public ProductController(CategoryService categoryService, ProductService productService) {
         this.categoryService = categoryService;
         this.productService = productService;
-        this.userService = userService;
     }
 
     @RequestMapping("/product/view/{id}")
@@ -49,7 +50,6 @@ public class ProductController {
 
     @RequestMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable String id, Model model) {
-        //model.addAttribute("cat", categoryService.getAllCategories());
        productService.deleteProduct(Long.valueOf(id));
         return "redirect:/product/list";
     }
@@ -60,10 +60,9 @@ public class ProductController {
             bindingResult.getAllErrors().forEach(System.out::println);
             return "product/addProduct";
         }
-
-        System.out.println("Field value: " + bindingResult.getFieldValue("categories"));
-        System.out.println("Field type: " + bindingResult.getFieldType("categories"));
-        System.out.println("Raw field value: " + bindingResult.getRawFieldValue("categories")); //[]
+        log.debug("Field value: " + bindingResult.getFieldValue("categories"));
+        log.debug("Field type: " + bindingResult.getFieldType("categories"));
+        log.debug("Raw field value: " + bindingResult.getRawFieldValue("categories"));
 
         productService.saveCommand(productCommand);
         return "redirect:/product/list";
@@ -80,7 +79,7 @@ public class ProductController {
     public ModelAndView handleNotFoundException(Exception exception) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("exceptions/notFound");
-        //modelAndView.addObject("exception", exception);
+        modelAndView.setStatus(HttpStatus.NOT_FOUND);
         return modelAndView;
     }
 }

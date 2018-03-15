@@ -2,6 +2,7 @@ package info.mike.webstorev1.controllers;
 
 import info.mike.webstorev1.service.CategoryService;
 import info.mike.webstorev1.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
+@Slf4j
 public class IndexController {
 
 
@@ -26,10 +28,11 @@ public class IndexController {
     public String getIndexPage(Model model, HttpServletRequest httpServletRequest)
     {
         model.addAttribute("cat", categoryService.getAllCategories());
-        System.out.println("Context path: " + httpServletRequest.getContextPath());
-        System.out.println("Session: " + httpServletRequest.getSession());
-        System.out.println("Session ID: " + httpServletRequest.getSession().getId());
-        System.out.println("Remote User: " + httpServletRequest.getRemoteUser());
+        log.debug("Context path: " + httpServletRequest.getContextPath());
+        log.debug("Session: " + httpServletRequest.getSession());
+        log.debug("Session ID: " + httpServletRequest.getSession().getId());
+        log.debug("Remote User: " + httpServletRequest.getRemoteUser());
+
         return "index";
     }
 

@@ -17,6 +17,7 @@ public class WebstoreV1Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebstoreV1Application.class, args);
+		/*
 		try {
 			Connection dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
 			dbConnection.prepareStatement( "INSERT INTO user (id, first_name, last_name, email, password) VALUES (1, 'Memory', 'Not', 'info@wp.pl', 'test')").execute();
@@ -25,5 +26,6 @@ public class WebstoreV1Application {
 		} catch (SQLException exc) {
 			System.out.println(exc);
 		}
+		*/
 	}
 }
