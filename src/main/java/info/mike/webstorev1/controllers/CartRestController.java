@@ -6,6 +6,7 @@ import info.mike.webstorev1.domain.Product;
 import info.mike.webstorev1.repository.CartRepository;
 import info.mike.webstorev1.service.CartService;
 import info.mike.webstorev1.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 
 @RestController
+@Slf4j
 public class CartRestController {
 
     CartService cartService;
@@ -42,7 +44,7 @@ public class CartRestController {
             cartBySessionId = cartService.createCart(httpServletRequest.getSession(true).getId());
         }
         Cart savedCart = cartService.addProduct(cartBySessionId, Long.valueOf(productId));
-        System.out.println("Wywołano addProduct(PUT)");
+        log.debug("Wywołano addProduct(PUT)");
         return new ResponseEntity<Cart>(savedCart, HttpStatus.OK);
     }
 
@@ -51,11 +53,12 @@ public class CartRestController {
         Cart cartBySessionId = cartService.findByCartSessionId(httpServletRequest.getSession(true).getId());
 
         if (cartBySessionId == null) {
+            //ToDo
             //throw new CartNotFoundException();
             return null;
         }
             Cart savedCart = cartService.deleteProduct(cartBySessionId, Long.valueOf(productId));
-            System.out.println("Wywołano deleteProduct(DELETE)");
+            log.debug("Wywołano deleteProduct(DELETE)");
 
         return new ResponseEntity<Cart>(savedCart, HttpStatus.OK);
     }

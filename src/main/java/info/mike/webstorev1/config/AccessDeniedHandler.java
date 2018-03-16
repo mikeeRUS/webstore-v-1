@@ -1,6 +1,7 @@
 package info.mike.webstorev1.config;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class AccessDeniedHandler implements org.springframework.security.web.access.AccessDeniedHandler {
 
     @Override
@@ -21,7 +23,7 @@ public class AccessDeniedHandler implements org.springframework.security.web.acc
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null) {
-            System.out.println("User " + authentication.getName()
+            log.debug("User " + authentication.getName()
                     + " attempted to access the protected URL: "
                     + httpServletRequest.getRequestURI());
         }

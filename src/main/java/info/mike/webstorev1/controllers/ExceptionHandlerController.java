@@ -6,9 +6,8 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 public class ExceptionHandlerController {
 
-
+    //ToDo
     public ModelAndView handleProductNotFoundException(Exception exception) {
-
         return new ModelAndView();
     }
 

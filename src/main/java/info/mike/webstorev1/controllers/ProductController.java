@@ -57,7 +57,9 @@ public class ProductController {
     @PostMapping("product")
     public String saveNewProduct(@Valid @ModelAttribute("productf") ProductCommand productCommand, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
-            bindingResult.getAllErrors().forEach(System.out::println);
+            bindingResult.getAllErrors().forEach(error -> {
+                log.debug(error.toString());
+            });
             return "product/addProduct";
         }
         log.debug("Field value: " + bindingResult.getFieldValue("categories"));
