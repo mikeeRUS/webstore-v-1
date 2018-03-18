@@ -4,9 +4,9 @@ import info.mike.webstorev1.commands.UserCommand;
 import info.mike.webstorev1.domain.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService extends UserDetailsService {
+import java.util.Optional;
 
-    User findByEmail(String email);
+public interface UserService extends UserDetailsService {
 
     UserCommand save(UserCommand userCommand);
 }
