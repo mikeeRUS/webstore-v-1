@@ -1,9 +1,6 @@
 package info.mike.webstorev1.controllers;
 
 import info.mike.webstorev1.domain.Cart;
-import info.mike.webstorev1.domain.CartItem;
-import info.mike.webstorev1.domain.Product;
-import info.mike.webstorev1.repository.CartRepository;
 import info.mike.webstorev1.service.CartService;
 import info.mike.webstorev1.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,14 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 
 @RestController
 @Slf4j
 public class CartRestController {
 
-    CartService cartService;
-    ProductService productService;
+    private final CartService cartService;
+    private final ProductService productService;
 
     public CartRestController(CartService cartService, ProductService productService) {
         this.cartService = cartService;

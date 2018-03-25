@@ -4,7 +4,6 @@ import info.mike.webstorev1.commands.ProductCommand;
 import info.mike.webstorev1.exceptions.NotFoundException;
 import info.mike.webstorev1.service.CategoryService;
 import info.mike.webstorev1.service.ProductService;
-import info.mike.webstorev1.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

@@ -6,7 +6,8 @@ import info.mike.webstorev1.domain.Category;
 import info.mike.webstorev1.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -38,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category findById(Long id) {
-
+        //ToDo
         return categoryRepository.findById(id).get();
     }
 }

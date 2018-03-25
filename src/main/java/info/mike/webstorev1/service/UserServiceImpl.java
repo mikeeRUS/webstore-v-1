@@ -3,22 +3,14 @@ package info.mike.webstorev1.service;
 import info.mike.webstorev1.commands.UserCommand;
 import info.mike.webstorev1.converters.UserCommandToUser;
 import info.mike.webstorev1.converters.UserToUserCommand;
-import info.mike.webstorev1.domain.Role;
 import info.mike.webstorev1.domain.User;
 import info.mike.webstorev1.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +29,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
         return userRepository.findByEmail(email).map(u -> createUser(u))
             .orElseThrow(() -> new UsernameNotFoundException("User " + email +  " not found !"));
     }
