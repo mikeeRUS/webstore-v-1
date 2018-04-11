@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -26,9 +27,13 @@ public class UserController {
     }
 
     @GetMapping("/registration")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new UserCommand());
-        return "registration";
+    public String showRegistrationForm(Model model, HttpServletRequest httpServletRequest) {
+        if(httpServletRequest.getUserPrincipal() != null)
+            return "redirect:/index";
+        else {
+            model.addAttribute("user", new UserCommand());
+            return "registration";
+        }
     }
 
     @PostMapping("/registration")

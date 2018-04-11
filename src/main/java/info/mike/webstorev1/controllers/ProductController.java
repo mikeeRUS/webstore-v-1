@@ -59,7 +59,7 @@ public class ProductController {
             bindingResult.getAllErrors().forEach(error -> {
                 log.debug(error.toString());
             });
-            return "product/addProduct";
+            return "redirect:/product/new";
         }
         log.debug("Field value: " + bindingResult.getFieldValue("categories"));
         log.debug("Field type: " + bindingResult.getFieldType("categories"));
