@@ -144,8 +144,8 @@ public class ProductControllerTest {
                 .param("id", "")
                 .param("name", "")
                 .param("description", "shortDescription"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("product/addProduct"));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/product/new"));
     }
 
     @Test
