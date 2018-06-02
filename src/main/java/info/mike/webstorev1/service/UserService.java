@@ -5,5 +5,5 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
 
-    UserCommand save(UserCommand userCommand);
+    UserCommand saveNewUser(UserCommand userCommand);
 }

@@ -4,6 +4,7 @@ import info.mike.webstorev1.commands.UserCommand;
 import info.mike.webstorev1.converters.UserCommandToUser;
 import info.mike.webstorev1.converters.UserToUserCommand;
 import info.mike.webstorev1.domain.User;
+import info.mike.webstorev1.exceptions.UserNotActivatedException;
 import info.mike.webstorev1.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,13 +36,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserCommand save(UserCommand userCommand){
+    public UserCommand saveNewUser(UserCommand userCommand){
+        userCommand.setActive(false);
+        userCommand.setActivationKey(UUID.randomUUID().toString());
+
         User detachedUser = userCommandToUser.convert(userCommand);
         User savedUser = userRepository.save(detachedUser);
         return userToUserCommand.convert(savedUser);
     }
 
     private org.springframework.security.core.userdetails.User createUser(User user) {
+        if(!user.isActive()) {
+            throw new UserNotActivatedException(":<");
+        }
         List<GrantedAuthority> authorities = user.getRoles().stream()
             .map(authority -> new SimpleGrantedAuthority(authority.getName()))
             .collect(Collectors.toList());

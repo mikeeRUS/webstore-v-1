@@ -4,6 +4,7 @@ import info.mike.webstorev1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -37,10 +38,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
                         "/product/new",
                         "/product/edit/**",
                         "/product/delete/**").hasAnyRole("ADMIN")
-                .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/index", true)
-                .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler())
-                .and().logout().permitAll();
+            .anyRequest().authenticated()
+            .and().formLogin().loginPage("/login").permitAll()
+            .defaultSuccessUrl("/index", true)//.failureHandler(loginFailedHandler())
+            .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler())
+            .and().logout().permitAll();
 
         http.logout()
                 .invalidateHttpSession(true)
@@ -76,6 +78,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
     @Bean
     public AccessDeniedHandler accessDeniedHandler(){
         return new AccessDeniedHandler();
+    }
+
+    @Bean
+    public LoginFailedHandler loginFailedHandler() {
+        return new LoginFailedHandler();
     }
 
 }

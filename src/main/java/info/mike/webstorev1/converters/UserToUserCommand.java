@@ -25,6 +25,8 @@ public class UserToUserCommand implements Converter<User, UserCommand> {
         final UserCommand userCommand = new UserCommand();
         userCommand.setFirstName(source.getFirstName());
         userCommand.setLastName(source.getLastName());
+        userCommand.setActivationKey(source.getActivationKey());
+        userCommand.setActive(source.isActive());
         userCommand.setEmail(source.getEmail());
         userCommand.setPassword(passwordEncoder.encode(source.getPassword()));
         return userCommand;

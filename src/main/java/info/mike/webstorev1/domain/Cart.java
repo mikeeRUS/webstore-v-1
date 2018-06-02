@@ -58,5 +58,4 @@ public class Cart {
         this.cartSessionId = cartSessionId;
     }
 
-
 }

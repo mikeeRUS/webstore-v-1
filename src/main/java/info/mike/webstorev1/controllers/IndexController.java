@@ -1,20 +1,20 @@
 package info.mike.webstorev1.controllers;
 
+import info.mike.webstorev1.exceptions.UserNotActivatedException;
 import info.mike.webstorev1.service.CategoryService;
 import info.mike.webstorev1.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @Slf4j
 public class IndexController {
-
 
     private final CategoryService categoryService;
     private final ProductService productService;
@@ -32,7 +32,6 @@ public class IndexController {
         log.debug("Session: " + httpServletRequest.getSession());
         log.debug("Session ID: " + httpServletRequest.getSession().getId());
         log.debug("Remote User: " + httpServletRequest.getRemoteUser());
-
         return "index";
     }
 
@@ -51,6 +50,15 @@ public class IndexController {
         else
             return "login";
     }
+
+    @ExceptionHandler(UserNotActivatedException.class)
+    public ModelAndView handleNotFoundException(UserNotActivatedException exception) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index");
+        modelAndView.setStatus(HttpStatus.NOT_FOUND);
+        return modelAndView;
+    }
+
 
     @PostMapping("/login")
     public String postLogin() {

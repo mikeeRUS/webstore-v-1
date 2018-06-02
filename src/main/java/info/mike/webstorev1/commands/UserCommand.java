@@ -29,6 +29,10 @@ public class UserCommand {
     @AssertTrue
     private Boolean terms;
 
+    private String activationKey;
+
+    private boolean active;
+
     public String getFirstName() {
         return firstName;
     }
@@ -83,5 +87,21 @@ public class UserCommand {
 
     public void setTerms(Boolean terms) {
         this.terms = terms;
+    }
+
+    public String getActivationKey() {
+        return activationKey;
+    }
+
+    public void setActivationKey(String activationKey) {
+        this.activationKey = activationKey;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

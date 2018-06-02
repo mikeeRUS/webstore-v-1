@@ -30,6 +30,8 @@ public class UserCommandToUser implements Converter<UserCommand, User> {
         user.setFirstName(source.getFirstName());
         user.setLastName(source.getLastName());
         user.setEmail(source.getEmail());
+        user.setActive(source.isActive());
+        user.setActivationKey(source.getActivationKey());
         user.setPassword(passwordEncoder.encode(source.getPassword()));
         user.setRoles(Arrays.asList(new Role("ROLE_USER")));
         return user;
